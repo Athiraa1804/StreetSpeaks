@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>StreetSpeaks Dashboard</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #b2c6f0; 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    .navbar {
+      background-color: #4c6daf;
+      overflow: hidden;
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .navbar .logo {
+      width: 120px;
+    }
+
+    .nav-buttons {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-buttons button {
+      padding: 10px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 20px;
+      background-color: #2e757d;
+      color: white;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .nav-buttons button:hover {
+      background-color: #225b60;
+    }
+
+    .container {
+      text-align: center;
+      margin-top: 100px; /* Push content below navbar */
+      padding: 20px;
+    }
+
+    h1 {
+      color: #2e757d;
+      font-size: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <img src="images/img2.png" alt="StreetSpeaks Logo" class="logo">
+    <div class="nav-buttons">
+      <button onclick="location.href='upload.html'">UPLOAD</button>
+      <button onclick="location.href='profile.html'">HOMEPAGE</button>
+      <button onclick="location.href='page1.html'">PROFILE</button>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>"A Smart Transportation Complaint and Feedback platform designed to bridge the gap between citizens and transportation authorities. It allows everyday people to report issues related to roads, traffic, and public transport directly to the relevant officials"</h1>
+  </div>
+
+</body>
+</html>
