@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StreetSpeak Complaint Form</title>
+
+<style>
+/* Body styling with professional gradient */
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(120deg, #e3f2fd, #90caf9);
+  margin: 0;
+  padding: 20px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Form container styling */
+.form-container {
+  max-width: 600px;
+  width: 100%;
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  animation: fadeIn 0.8s ease-in-out;
+}
+
+/* Form title */
+h1 {
+  font-size: 22px;
+  margin-bottom: 20px;
+  color: #1a237e;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* Labels */
+label {
+  display: block;
+  margin: 15px 0 5px;
+  font-weight: 500;
+  color: #333;
+}
+
+/* Inputs, selects, textarea */
+input, select, textarea, button {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #64b5f6;
+  outline: none;
+  box-shadow: 0 0 6px rgba(100, 181, 246, 0.4);
+}
+
+/* Textarea */
+textarea {
+  height: 100px;
+  resize: none;
+}
+
+/* Inline fields */
+.inline-fields {
+  display: flex;
+  gap: 10px;
+}
+
+.inline-fields input {
+  flex: 1;
+}
+
+/* Required label */
+.required {
+  color: #d32f2f;
+  font-size: 12px;
+}
+
+/* Checkbox section */
+.checkbox {
+  display: flex;
+  align-items: center;
+  margin: 10px 0;
+}
+
+.checkbox input {
+  width: auto;
+  margin-right: 10px;
+}
+
+/* Submit button */
+.submit-btn {
+  background-color: #1e88e5;
+  color: #fff;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background 0.3s ease, transform 0.2s;
+  border-radius: 8px;
+}
+
+.submit-btn:hover {
+  background-color: #1565c0;
+  transform: translateY(-2px);
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+
+<div class="form-container">
+  <h1>Report a Road or Transportation Issue</h1>
+  
+  <form>
+    <label for="firstName">Full Name <span class="required">(Required)</span></label>
+    <div class="inline-fields">
+      <input type="text" id="firstName" placeholder="First" required>
+      <input type="text" id="lastName" placeholder="Last" required>
+    </div>
+
+    <label>Email <span class="required">(Required)</span></label>
+    <div class="inline-fields">
+      <input type="email" placeholder="Enter Email" required>
+      <input type="email" placeholder="Confirm Email" required>
+    </div>
+
+    <label for="phone">Phone Number</label>
+    <input type="tel" id="phone" placeholder="Enter Phone Number">
+
+    <label for="category">Complaint Category <span class="required">(Required)</span></label>
+    <select id="category" required>
+      <option value="">Select Category</option>
+      <option>Pothole</option>
+      <option>Broken Traffic Light</option>
+      <option>Damaged Signboard</option>
+      <option>Improper Parking</option>
+      <option>Unsafe Pedestrian Path</option>
+      <option>Others</option>
+    </select>
+
+    <label for="title">Issue Title <span class="required">(Required)</span></label>
+    <input type="text" id="title" placeholder="Short title for the issue" required>
+
+    <label for="description">Description <span class="required">(Required)</span></label>
+    <textarea id="description" placeholder="Describe the issue in detail" maxlength="500" required></textarea>
+
+    <label for="location">Location <span class="required">(Required)</span></label>
+    <input type="text" id="location" placeholder="Enter location manually">
+    <button type="button">Use My Location</button>
+
+    <label for="fileUpload">Upload Image/Video (Optional)</label>
+    <input type="file" id="fileUpload" accept="image/*,video/*">
+
+    <div class="checkbox">
+      <input type="checkbox" id="consent" required>
+      <label for="consent">I confirm this complaint is accurate and agree to the terms.</label>
+    </div>
+
+    <button type="submit" class="submit-btn">Submit Complaint</button>
+  </form>
+</div>
+
+</body>
+</html>
