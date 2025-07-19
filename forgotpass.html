@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Forgot Password - StreetSpeaks</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(120deg, #b2f0c0, #5dbb63);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .forgot-container {
+      background: #ffffff;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      width: 350px;
+      text-align: center;
+    }
+
+    .forgot-container h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .forgot-container input {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+
+    .forgot-container button {
+      margin-top: 10px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 12px;
+      width: 100%;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .forgot-container button:hover {
+      background-color: #218838;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="forgot-container">
+    <h2>Forgot Password</h2>
+
+    <input type="text" id="phone" placeholder="Enter Mobile Number" maxlength="10" required>
+
+    <input type="text" id="confirmPhone" placeholder="Confirm Mobile Number" maxlength="10" required>
+
+    <button onclick="sendOTP()">Send OTP</button>
+
+    <input type="text" id="otpInput" placeholder="Enter OTP">
+
+    <button onclick="verifyOTP()">Verify OTP</button>
+  </div>
+
+  <script>
+    let generatedOTP = "";
+
+    function sendOTP() {
+      const phone = document.getElementById("phone").value;
+      const confirmPhone = document.getElementById("confirmPhone").value;
+
+      if (phone.length === 10 && !isNaN(phone)) {
+        if (phone === confirmPhone) {
+          // Generate a simple random 4-digit OTP
+          generatedOTP = Math.floor(1000 + Math.random() * 9000);
+          alert("OTP sent to " + phone + ": " + generatedOTP); // Simulate OTP sending
+        } else {
+          alert("Mobile numbers do not match. Please re-enter.");
+        }
+      } else {
+        alert("Please enter a valid 10-digit mobile number.");
+      }
+    }
+
+    function verifyOTP() {
+      const userOTP = document.getElementById("otpInput").value;
+
+      if (userOTP == generatedOTP) {
+        alert("OTP Verified! Redirecting to Dashboard...");
+        window.location.href = "dashboard.html"; // Replace with your page3 file
+      } else {
+        alert("Invalid OTP. Please try again.");
+      }
+    }
+  </script>
+
+</body>
+</html>
+
