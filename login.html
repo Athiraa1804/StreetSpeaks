@@ -6,7 +6,7 @@
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(120deg, #b2f0c0, #5dbb63); /* Your chosen green gradient */
+      background: linear-gradient(120deg, #b2f0c0, #5dbb63);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -101,7 +101,7 @@
   <div class="login-container">
     <h2>Login</h2>
 
-    <input type="email" placeholder="Email" required>
+    <input type="email" id="emailInput" placeholder="Email" required>
 
     <div class="password-wrapper">
       <input type="password" placeholder="Password" id="passwordInput" required>
@@ -115,7 +115,7 @@
       <a href="#">Forgot password?</a>
     </div>
 
-    <button>Login</button>
+    <button onclick="login()">Login</button>
 
     <div class="signup">
       Don't have an account? <a href="2create.html">Signup</a>
@@ -133,6 +133,18 @@
       } else {
         input.type = "password";
         icon.innerHTML = '<path d="M12 4.5C7 4.5 2.7 8.4 1 12c1.7 3.6 6 7.5 11 7.5s9.3-3.9 11-7.5c-1.7-3.6-6-7.5-11-7.5zm0 12a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z"/><circle cx="12" cy="12" r="2.5"/>';
+      }
+    }
+
+    function login() {
+      const email = document.getElementById("emailInput").value;
+      const password = document.getElementById("passwordInput").value;
+
+      // Simple check for demo purpose (no actual authentication here)
+      if (email && password) {
+        window.location.href = "page3.html"; // Replace with your actual dashboard file name
+      } else {
+        alert("Please enter email and password!");
       }
     }
   </script>
