@@ -28,25 +28,23 @@
       color: #333;
     }
 
-    .forgot-container input {
+    .forgot-container input, .forgot-container button {
       width: 100%;
       padding: 12px;
       margin: 10px 0;
-      border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 16px;
       box-sizing: border-box;
     }
 
+    .forgot-container input {
+      border: 1px solid #ccc;
+    }
+
     .forgot-container button {
-      margin-top: 10px;
       background-color: #28a745;
       color: white;
       border: none;
-      padding: 12px;
-      width: 100%;
-      border-radius: 8px;
-      font-size: 16px;
       cursor: pointer;
       transition: background 0.3s;
     }
@@ -62,13 +60,11 @@
     <h2>Forgot Password</h2>
 
     <input type="text" id="phone" placeholder="Enter Mobile Number" maxlength="10" required>
-
     <input type="text" id="confirmPhone" placeholder="Confirm Mobile Number" maxlength="10" required>
 
     <button onclick="sendOTP()">Send OTP</button>
 
     <input type="text" id="otpInput" placeholder="Enter OTP">
-
     <button onclick="verifyOTP()">Verify OTP</button>
   </div>
 
@@ -81,9 +77,8 @@
 
       if (phone.length === 10 && !isNaN(phone)) {
         if (phone === confirmPhone) {
-          // Generate a simple random 4-digit OTP
           generatedOTP = Math.floor(1000 + Math.random() * 9000);
-          alert("OTP sent to " + phone + ": " + generatedOTP); // Simulate OTP sending
+          alert("OTP sent to " + phone + ": " + generatedOTP); // Simulate SMS
         } else {
           alert("Mobile numbers do not match. Please re-enter.");
         }
@@ -96,8 +91,8 @@
       const userOTP = document.getElementById("otpInput").value;
 
       if (userOTP == generatedOTP) {
-        alert("OTP Verified! Redirecting to Dashboard...");
-        window.location.href = "dashboard.html"; // Replace with your page3 file
+        alert("Password restored successfully! Redirecting to Dashboard...");
+        window.location.href = "page3.html";
       } else {
         alert("Invalid OTP. Please try again.");
       }
@@ -106,4 +101,3 @@
 
 </body>
 </html>
-
