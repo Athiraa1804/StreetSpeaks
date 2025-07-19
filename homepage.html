@@ -98,6 +98,13 @@
             font-weight: 500;
         }
 
+        .emergency-icon {
+            font-size: 20px;
+            color: red;
+            margin-top: 5px;
+            font-weight: bold;
+        }
+
         /* Comment Modal */
         .modal {
             display: none;
@@ -163,40 +170,8 @@
 
     <div class="header">StreetSpeaks - People's Voice</div>
 
-    <div class="post-container">
-        
-        <!-- Post 1 -->
-        <div class="post" id="post1">
-            <img src="https://via.placeholder.com/800x400?text=Road+Issue" class="post-image" alt="Road Issue">
-            <h3>Road Potholes Near ABC Junction</h3>
-            <p>The road near ABC Junction is filled with potholes causing frequent accidents. Kindly take action!</p>
-            <div class="buttons">
-                <button class="poll-button" onclick="votePoll('post1')">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1040/1040230.png" alt="Poll Icon">
-                    Poll
-                </button>
-                <button onclick="alert('Share Link Copied!')">Share</button>
-                <button onclick="openComment('post1')">Comment</button>
-            </div>
-            <div class="poll-rate" id="poll-rate-post1">Poll Support: 0%</div>
-        </div>
-
-        <!-- Post 2 -->
-        <div class="post" id="post2">
-            <img src="https://via.placeholder.com/800x400?text=Street+Lighting+Issue" class="post-image" alt="Street Lighting">
-            <h3>No Proper Street Lighting in XYZ Colony</h3>
-            <p>The street lights in XYZ colony have been non-functional for months. This poses a risk for women and elderly during nights.</p>
-            <div class="buttons">
-                <button class="poll-button" onclick="votePoll('post2')">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1040/1040230.png" alt="Poll Icon">
-                    Poll
-                </button>
-                <button onclick="alert('Share Link Copied!')">Share</button>
-                <button onclick="openComment('post2')">Comment</button>
-            </div>
-            <div class="poll-rate" id="poll-rate-post2">Poll Support: 0%</div>
-        </div>
-
+    <div class="post-container" id="postContainer">
+        <!-- Posts will be dynamically inserted here -->
     </div>
 
     <!-- Comment Modal -->
@@ -211,17 +186,61 @@
     </div>
 
     <script>
-        // Poll data
-        let pollData = {
-            post1: { votes: 0, total: 100 },
-            post2: { votes: 0, total: 100 }
-        };
+        let posts = [
+            {
+                id: 'post1',
+                title: 'Road Potholes Near ABC Junction',
+                description: 'The road near ABC Junction is filled with potholes causing frequent accidents. Kindly take action!',
+                image: 'https://via.placeholder.com/800x400?text=Road+Issue',
+                votes: 0,
+                total: 20
+            },
+            {
+                id: 'post2',
+                title: 'No Proper Street Lighting in XYZ Colony',
+                description: 'The street lights in XYZ colony have been non-functional for months. This poses a risk for women and elderly during nights.',
+                image: 'https://via.placeholder.com/800x400?text=Street+Lighting+Issue',
+                votes: 0,
+                total: 20
+            }
+        ];
+
+        function renderPosts() {
+            // Sort posts in descending order of poll percentage
+            posts.sort((a, b) => (b.votes / b.total) - (a.votes / a.total));
+
+            const container = document.getElementById('postContainer');
+            container.innerHTML = '';
+
+            posts.forEach(post => {
+                const pollPercent = Math.round((post.votes / post.total) * 100);
+                const emergency = pollPercent > 30 ? '<div class="emergency-icon">🚨 Emergency!</div>' : '';
+
+                container.innerHTML += `
+                    <div class="post" id="${post.id}">
+                        <img src="${post.image}" class="post-image" alt="${post.title}">
+                        <h3>${post.title}</h3>
+                        <p>${post.description}</p>
+                        <div class="buttons">
+                            <button class="poll-button" onclick="votePoll('${post.id}')">
+                                <img src="https://cdn-icons-png.flaticon.com/512/1040/1040230.png" alt="Poll Icon">
+                                Poll
+                            </button>
+                            <button onclick="alert('Share Link Copied!')">Share</button>
+                            <button onclick="openComment('${post.id}')">Comment</button>
+                        </div>
+                        <div class="poll-rate">Poll Support: ${pollPercent}%</div>
+                        ${emergency}
+                    </div>
+                `;
+            });
+        }
 
         function votePoll(postId) {
-            pollData[postId].votes += 1;
-            let rate = Math.round((pollData[postId].votes / pollData[postId].total) * 100);
-            document.getElementById(`poll-rate-${postId}`).innerText = `Poll Support: ${rate}%`;
+            const post = posts.find(p => p.id === postId);
+            post.votes += 1;
             alert("Your vote has been counted!");
+            renderPosts();
         }
 
         // Comment modal
@@ -247,7 +266,11 @@
             alert(`Your comment on ${currentPost}: "${comment}" has been submitted.`);
             closeModal();
         }
+
+        // Initial render
+        renderPosts();
     </script>
 
 </body>
 </html>
+
