@@ -1,98 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>StreetSpeak Complaint Form</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>StreetSpeak Complaint Form</title>
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(120deg, #e3f2fd, #90caf9);
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
 
-<style>
-body {
-  font-family: 'Inter', sans-serif;
-  background: linear-gradient(120deg, #e3f2fd, #90caf9);
-  margin: 0;
-  padding: 20px;
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+    .form-container {
+      max-width: 600px;
+      width: 100%;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    }
 
-.form-container {
-  max-width: 600px;
-  width: 100%;
-  background: #ffffff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-}
+    h1 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      color: #1a237e;
+      text-align: center;
+      font-weight: 600;
+    }
 
-h1 {
-  font-size: 22px;
-  margin-bottom: 20px;
-  color: #1a237e;
-  text-align: center;
-  font-weight: 600;
-}
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: 500;
+      color: #333;
+    }
 
-label {
-  display: block;
-  margin: 15px 0 5px;
-  font-weight: 500;
-  color: #333;
-}
+    input, select, textarea, button {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      transition: all 0.3s ease;
+    }
 
-input, select, textarea, button {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 14px;
-  transition: all 0.3s ease;
-}
+    textarea {
+      height: 100px;
+    }
 
-textarea {
-  height: 100px;
-}
+    .inline-fields {
+      display: flex;
+      gap: 10px;
+    }
 
-.inline-fields {
-  display: flex;
-  gap: 10px;
-}
+    .required {
+      color: #d32f2f;
+      font-size: 12px;
+    }
 
-.required {
-  color: #d32f2f;
-  font-size: 12px;
-}
+    .submit-btn {
+      background-color: #1e88e5;
+      color: #fff;
+      border: none;
+      font-weight: bold;
+      cursor: pointer;
+      font-size: 16px;
+      transition: background 0.3s ease, transform 0.2s;
+      border-radius: 8px;
+    }
 
-.submit-btn {
-  background-color: #1e88e5;
-  color: #fff;
-  border: none;
-  font-weight: bold;
-  cursor: pointer;
-  font-size: 16px;
-  transition: background 0.3s ease, transform 0.2s;
-  border-radius: 8px;
-}
+    .submit-btn:hover {
+      background-color: #1565c0;
+    }
 
-.submit-btn:hover {
-  background-color: #1565c0;
-}
-
-.message {
-  text-align: center;
-  font-weight: bold;
-  color: green;
-  margin-top: 10px;
-}
-</style>
+    .message {
+      text-align: center;
+      font-weight: bold;
+      color: green;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
 
 <div class="form-container">
   <h1>Report a Road or Transportation Issue</h1>
-  
   <form id="complaintForm">
     <label>Full Name <span class="required">(Required)</span></label>
     <div class="inline-fields">
@@ -144,93 +142,51 @@ textarea {
 </div>
 
 <script>
-// Get DOM elements
-const form = document.getElementById('complaintForm');
-const messageBox = document.getElementById('message');
+  const form = document.getElementById('complaintForm');
 
-// Location button
-document.getElementById('getLocation').addEventListener('click', () => {
-  if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(async (pos) => {
-      const { latitude, longitude } = pos.coords;
-
-      try {
-        // Call Nominatim Reverse Geocoding API
-        const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`, {
-          headers: {
-            'User-Agent': 'StreetSpeakApp/1.0 (contact@example.com)' // Required by Nominatim policy
-          }
-        });
-
-        const data = await response.json();
-
-        // Display address or fallback to Lat/Lng
-        const address = data.display_name ? data.display_name : `Lat: ${latitude}, Lng: ${longitude}`;
-        document.getElementById('location').value = address;
-
-      } catch (error) {
-        alert('Failed to fetch address. Showing coordinates instead.');
-        document.getElementById('location').value = `Lat: ${latitude}, Lng: ${longitude}`;
-      }
-    }, () => {
-      alert('Unable to retrieve location');
-    });
-  } else {
-    alert('Geolocation not supported by browser');
-  }
-});
-
-// Form submit
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  // Validate email match
-  const email = document.getElementById('email').value;
-  const confirmEmail = document.getElementById('confirmEmail').value;
-  if (email !== confirmEmail) {
-    alert('Emails do not match!');
-    return;
-  }
-
-  // Validate file size
-  const file = document.getElementById('fileUpload').files[0];
-  if (file && file.size > 10 * 1024 * 1024) { // 10MB limit
-    alert('File size should not exceed 10MB');
-    return;
-  }
-
-  // Collect form data
-  const data = {
-    firstName: document.getElementById('firstName').value,
-    lastName: document.getElementById('lastName').value,
-    email,
-    phone: document.getElementById('phone').value,
-    category: document.getElementById('category').value,
-    title: document.getElementById('title').value,
-    description: document.getElementById('description').value,
-    location: document.getElementById('location').value
-  };
-
-  // Send to backend
-  try {
-    const res = await fetch('http://localhost:5000/api/complaints', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
-
-    if (res.ok) {
-      messageBox.style.color = 'green';
-      messageBox.textContent = 'Complaint submitted successfully!';
-      form.reset();
+  document.getElementById('getLocation').addEventListener('click', () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(async (pos) => {
+        const { latitude, longitude } = pos.coords;
+        try {
+          const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`, {
+            headers: { 'User-Agent': 'StreetSpeakApp/1.0 (contact@example.com)' }
+          });
+          const data = await response.json();
+          const address = data.display_name ? data.display_name : `Lat: ${latitude}, Lng: ${longitude}`;
+          document.getElementById('location').value = address;
+        } catch (error) {
+          alert('Failed to fetch address. Showing coordinates instead.');
+          document.getElementById('location').value = `Lat: ${latitude}, Lng: ${longitude}`;
+        }
+      }, () => {
+        alert('Unable to retrieve location');
+      });
     } else {
-      throw new Error('Failed to submit complaint');
+      alert('Geolocation not supported by browser');
     }
-  } catch (error) {
-    messageBox.style.color = 'red';
-    messageBox.textContent = 'Error submitting complaint';
-  }
-});
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const email = document.getElementById('email').value;
+    const confirmEmail = document.getElementById('confirmEmail').value;
+
+    if (email !== confirmEmail) {
+      alert('Emails do not match!');
+      return;
+    }
+
+    const file = document.getElementById('fileUpload').files[0];
+    if (file && file.size > 10 * 1024 * 1024) {
+      alert('File size should not exceed 10MB');
+      return;
+    }
+
+    // If validation passes, go to page3.html
+    window.location.href = 'page3.html';
+  });
 </script>
 
 </body>
