@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StreetSpeaks | Dashboard</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f5f7fa;
+        color: #333;
+    }
+
+    header {
+        background-color: #2e7d32;
+        color: white;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    header h1 {
+        margin: 0;
+        font-size: 24px;
+    }
+
+    nav a {
+        color: white;
+        text-decoration: none;
+        margin-left: 20px;
+        font-size: 16px;
+        transition: color 0.3s;
+    }
+
+    nav a:hover {
+        color: #c8e6c9;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: 30px auto;
+        padding: 0 20px;
+    }
+
+    h2 {
+        font-size: 26px;
+        margin-bottom: 20px;
+        text-align: center;
+        color: #2e7d32;
+    }
+
+    .complaint-card {
+        background: white;
+        border-radius: 10px;
+        padding: 20px;
+        margin: 15px 0;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease;
+    }
+
+    .complaint-card:hover {
+        transform: translateY(-5px);
+    }
+
+    .complaint-card h3 {
+        margin: 0 0 10px;
+        color: #1b5e20;
+    }
+
+    .complaint-card p {
+        margin: 5px 0;
+        font-size: 15px;
+    }
+
+    .status {
+        display: inline-block;
+        padding: 4px 10px;
+        border-radius: 5px;
+        font-size: 13px;
+        font-weight: bold;
+        color: white;
+    }
+
+    .status.Pending { background-color: #f57c00; }
+    .status.Resolved { background-color: #388e3c; }
+
+    .vote-buttons {
+        margin-top: 12px;
+        display: flex;
+        gap: 10px;
+    }
+
+    .vote-buttons button {
+        flex: 1;
+        padding: 10px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: bold;
+        transition: background 0.3s;
+    }
+
+    .upvote {
+        background-color: #43a047;
+        color: white;
+    }
+    .upvote:hover {
+        background-color: #388e3c;
+    }
+
+    .downvote {
+        background-color: #e53935;
+        color: white;
+    }
+    .downvote:hover {
+        background-color: #c62828;
+    }
+</style>
+</head>
+<body>
+
+<header>
+  <img src="{{ url_for('static', filename='images/img2.png') }}" alt="StreetSpeaks Logo" style="height: 40px;">
+  <h1>StreetSpeaks</h1>
+    <nav>
+        <a href="/dashboard">Home</a>
+        <a href="/profile">Profile</a>
+        <a href="/complaint">Report Issue</a>
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+
+<div class="container">
+    <h2>Welcome, {{ username }}</h2>
+    <h2>Complaints in Your Locality</h2>
+
+    {% for complaint in complaints %}
+    <div class="complaint-card">
+        <h3>{{ complaint[1] }}</h3>
+        <p>{{ complaint[2] }}</p>
+        <p><strong>By:</strong> {{ complaint[6] }}</p>
+        <p><span class="status {{ complaint[3] }}">{{ complaint[3] }}</span></p>
+        <div class="vote-buttons">
+            <button class="upvote" onclick="vote({{ complaint[0] }}, 'up')">
+                👍 Upvote ({{ complaint[4] }})
+            </button>
+            <button class="downvote" onclick="vote({{ complaint[0] }}, 'down')">
+                👎 Downvote ({{ complaint[5] }})
+            </button>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<script>
+function vote(complaintId, type) {
+    fetch(`/vote/${complaintId}/${type}`, { method: "POST" })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message || data.error);
+        location.reload();
+    });
+}
+</script>
+
+</body>
+</html>

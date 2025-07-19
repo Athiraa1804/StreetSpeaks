@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Profile | StreetSpeaks</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(120deg, #b2f0c0, #5dbb63);
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            background: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            max-width: 700px;
+            margin: auto;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        h2 {
+            color: #2e7d32;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .profile-details {
+            margin-bottom: 20px;
+        }
+        .profile-details p {
+            font-size: 16px;
+            margin: 8px 0;
+        }
+        h3 {
+            margin-top: 20px;
+            color: #388e3c;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            background: #f1f8f1;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+        .status {
+            font-weight: bold;
+            color: #388e3c;
+        }
+        .btn {
+            display: inline-block;
+            padding: 10px 15px;
+            background: #388e3c;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-top: 15px;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #2e7d32;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Your Profile</h2>
+
+        <div class="profile-details">
+            <p><strong>Username:</strong> {{ user[0] }}</p>
+            <p><strong>Email:</strong> {{ user[1] }}</p>
+            <p><strong>Phone:</strong> {{ user[2] }}</p>
+            <p><strong>District:</strong> {{ user[3] }}</p>
+            <p><strong>Locality:</strong> {{ user[4] }}</p>
+            <p><strong>Address:</strong> {{ user[5] }}</p>
+            <p><strong>Pincode:</strong> {{ user[6] }}</p>
+        </div>
+
+        <h3>Your Complaints</h3>
+        <ul>
+            {% for complaint in user_complaints %}
+                <li>
+                    <strong>{{ complaint[0] }}</strong> - {{ complaint[1] }}
+                    <br>
+                    <span class="status">Status: {{ complaint[2] }}</span>
+                </li>
+            {% else %}
+                <li>No complaints submitted yet.</li>
+            {% endfor %}
+        </ul>
+
+        <a href="{{ url_for('dashboard') }}" class="btn">Back to Dashboard</a>
+    </div>
+</body>
+</html>

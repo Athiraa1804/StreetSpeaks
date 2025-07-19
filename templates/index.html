@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>STREETSPEAKS | Welcome</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+
+        .background {
+            background-image: url('static/images/img1.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            filter: brightness(0.7);
+        }
+
+        .content {
+            position: relative;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 60px;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
+        }
+
+        .quote {
+            font-size: 16px;
+            font-style: italic;
+            color: white;
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.7);
+            margin-bottom: 50px;
+            max-width: 80%;
+        }
+
+        .buttons {
+            position: absolute;
+            bottom: 50px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            backdrop-filter: blur(5px);
+            text-decoration: none; /* For <a> buttons */
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="background"></div>
+    <div class="content">
+        <h1>StreetSpeaks</h1>
+        <p class="quote">"Smart transportation is not just about technology—it’s about people coming together to make cities safer, smoother, and more accessible for everyone."</p>
+        <div class="buttons">
+            <a href="{{ url_for('login') }}" class="btn">Sign In</a>
+            <a href="{{ url_for('register') }}" class="btn">Create an Account</a>
+        </div>
+    </div>
+</body>
+</html>
