@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Profile Page</title>
+  <link rel="stylesheet" href="profile.css"/>
+  <style>
+    .edit-btn {
+      margin-bottom: 10px;
+      padding: 6px 12px;
+      background-color: lightgrey;
+      color: black;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .edit-btn:hover {
+      background-color: #c0c0c0;
+    }
+
+    select[disabled],
+    input[readonly] {
+      background-color: #f0f0f0;
+    }
+
+    .profile-pic img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+  <div class="profile-container">
+    <div class="profile-header">
+      <div class="profile-pic" id="profile-pic">
+        <!-- Profile photo appears here -->
+      </div>
+      <input type="file" id="photoUpload" accept="image/*" onchange="loadImage(event)">
+      <!-- Removed the Name line -->
+    </div>
+
+    <div class="profile-info">
+      <button class="edit-btn" onclick="toggleEdit()">Edit Details</button>
+
+      <label>Full Name</label>
+      <input type="text" placeholder="Enter your full name" readonly />
+
+      <label>Phone No</label>
+      <input type="text" placeholder="Enter phone number" readonly />
+
+      <label>Email</label>
+      <input type="email" placeholder="Enter email" readonly />
+
+      <label>District</label>
+      <select id="district" disabled>
+        <option value="">Select District</option>
+        <option value="Thiruvananthapuram">Thiruvananthapuram</option>
+        <option value="Kollam">Kollam</option>
+        <option value="Pathanamthitta">Pathanamthitta</option>
+        <option value="Alappuzha">Alappuzha</option>
+        <option value="Kottayam">Kottayam</option>
+        <option value="Idukki">Idukki</option>
+        <option value="Ernakulam">Ernakulam</option>
+        <option value="Thrissur">Thrissur</option>
+        <option value="Palakkad">Palakkad</option>
+        <option value="Malappuram">Malappuram</option>
+        <option value="Kozhikode">Kozhikode</option>
+        <option value="Wayanad">Wayanad</option>
+        <option value="Kannur">Kannur</option>
+        <option value="Kasaragod">Kasaragod</option>
+      </select>
+
+      <label>Locality</label>
+      <input type="text" placeholder="Enter locality" readonly />
+
+      <label>Address</label>
+      <input type="text" placeholder="Enter address" readonly />
+
+      <label>Pincode</label>
+      <input type="text" placeholder="Enter pincode" readonly />
+
+      <label>Badge</label>
+      <input type="text" placeholder="Gold / Silver / etc." readonly />
+    </div>
+
+    <div class="profile-footer">
+      <h3>My Posts</h3>
+      <div class="posts-section">
+        <div class="no-posts">
+          <img src="https://cdn-icons-png.flaticon.com/512/4076/4076549.png" alt="No posts" />
+          <p>No posts yet</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function loadImage(event) {
+      const imageContainer = document.getElementById("profile-pic");
+      imageContainer.innerHTML = "";
+      const img = document.createElement("img");
+      img.src = URL.createObjectURL(event.target.files[0]);
+      imageContainer.appendChild(img);
+    }
+
+    function toggleEdit() {
+      const inputs = document.querySelectorAll(".profile-info input:not([placeholder*='Gold'])");
+      const districtSelect = document.getElementById("district");
+      const button = document.querySelector(".edit-btn");
+
+      const isEditable = inputs[0].readOnly === false;
+
+      inputs.forEach(input => {
+        input.readOnly = isEditable;
+        input.style.backgroundColor = isEditable ? "#f0f0f0" : "white";
+      });
+
+      districtSelect.disabled = isEditable;
+      districtSelect.style.backgroundColor = isEditable ? "#f0f0f0" : "white";
+
+      button.textContent = isEditable ? "Edit Details" : "Save";
+    }
+  </script>
+</body>
+</html>
