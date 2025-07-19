@@ -151,9 +151,27 @@ const messageBox = document.getElementById('message');
 // Location button
 document.getElementById('getLocation').addEventListener('click', () => {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition((pos) => {
+    navigator.geolocation.getCurrentPosition(async (pos) => {
       const { latitude, longitude } = pos.coords;
-      document.getElementById('location').value = `Lat: ${latitude}, Lng: ${longitude}`;
+
+      try {
+        // Call Nominatim Reverse Geocoding API
+        const response = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${latitude}&lon=${longitude}&format=json`, {
+          headers: {
+            'User-Agent': 'StreetSpeakApp/1.0 (contact@example.com)' // Required by Nominatim policy
+          }
+        });
+
+        const data = await response.json();
+
+        // Display address or fallback to Lat/Lng
+        const address = data.display_name ? data.display_name : `Lat: ${latitude}, Lng: ${longitude}`;
+        document.getElementById('location').value = address;
+
+      } catch (error) {
+        alert('Failed to fetch address. Showing coordinates instead.');
+        document.getElementById('location').value = `Lat: ${latitude}, Lng: ${longitude}`;
+      }
     }, () => {
       alert('Unable to retrieve location');
     });
