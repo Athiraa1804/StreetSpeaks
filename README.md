@@ -15,3 +15,4 @@ Doc view of Our Project :
 
 Video presentation of our Project :
 []
+Project pdf: [https://drive.google.com/file/d/13EVHv_qAp97FegYoPLrGxDSMD6rvaluQ/view?usp=drivesdk]
