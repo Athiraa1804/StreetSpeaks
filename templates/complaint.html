@@ -1,63 +1,60 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Upload Complaint - StreetSpeak</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    background: linear-gradient(120deg, #b2f0c0, #5dbb63);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    margin: 0;
-  }
-  .form-container {
-    background: #fff;
-    padding: 30px;
-    border-radius: 12px;
-    width: 400px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-  }
-  h2 {
-    text-align: center;
-    margin-bottom: 20px;
-    color: #2e7d32;
-  }
-  input, textarea {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 15px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    font-size: 16px;
-    box-sizing: border-box;
-  }
-  button {
-    width: 100%;
-    padding: 12px;
-    background: #388e3c;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  button:hover {
-    background: #2e7d32;
-  }
-</style>
+    <title>Upload Complaint</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+    <style>
+        body { font-family: Arial; padding: 20px; }
+        form { background: #f9f9f9; padding: 20px; border-radius: 8px; }
+        input, textarea, button { width: 100%; padding: 10px; margin: 8px 0; border-radius: 6px; border: 1px solid #ccc; }
+        #map { height: 300px; margin-top: 10px; border-radius: 8px; }
+        .btn { background: #28a745; color: white; border: none; cursor: pointer; }
+        .btn:hover { background: #218838; }
+    </style>
 </head>
 <body>
-<div class="form-container">
-  <h2>Upload Complaint</h2>
-  <form method="POST" action="/complaint">
+<h2>Upload Complaint</h2>
+<form action="/complaint" method="POST">
     <input type="text" name="title" placeholder="Complaint Title" required>
-    <textarea name="description" rows="4" placeholder="Complaint Description" required></textarea>
-    <input type="text" name="location" placeholder="Location" required>
-    <button type="submit">Submit</button>
-  </form>
-</div>
+    <textarea name="description" placeholder="Complaint Description" required></textarea>
+    <input type="text" name="location" placeholder="Location (optional)">
+    <input type="hidden" name="latitude" id="latitude">
+    <input type="hidden" name="longitude" id="longitude">
+    <button type="button" onclick="getLocation()" class="btn">📍 Auto Detect Location</button>
+    <div id="map"></div>
+    <button type="submit" class="btn">Submit Complaint</button>
+</form>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+var map = L.map('map').setView([9.9312, 76.2673], 10);
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+
+var marker;
+map.on('click', function(e) {
+    var lat = e.latlng.lat;
+    var lng = e.latlng.lng;
+    if (marker) map.removeLayer(marker);
+    marker = L.marker([lat, lng]).addTo(map);
+    document.getElementById('latitude').value = lat;
+    document.getElementById('longitude').value = lng;
+});
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function(pos) {
+            var lat = pos.coords.latitude;
+            var lng = pos.coords.longitude;
+            map.setView([lat, lng], 14);
+            if (marker) map.removeLayer(marker);
+            marker = L.marker([lat, lng]).addTo(map);
+            document.getElementById('latitude').value = lat;
+            document.getElementById('longitude').value = lng;
+        });
+    } else {
+        alert("Geolocation not supported!");
+    }
+}
+</script>
 </body>
 </html>

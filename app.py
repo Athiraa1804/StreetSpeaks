@@ -6,8 +6,14 @@ app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
 # ✅ Database connection
-conn = sqlite3.connect("streetspeaks.db", check_same_thread=False)
+import os
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+db_path = os.path.join(BASE_DIR, "streetspeaks.db")
+
+conn = sqlite3.connect(db_path, check_same_thread=False)
 cursor = conn.cursor()
+
 
 # ✅ Create tables if not exist
 cursor.execute('''CREATE TABLE IF NOT EXISTS users (
