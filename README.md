@@ -9,3 +9,5 @@ Key Features:
 •	Authority Dashboard: For efficient complaint management and response.
 •	Data Analytics: Identify frequently reported issues and problem zones.
 By acting as a bridge between citizens and civic bodies, StreetSpeak aims to create safer, smarter, and better-maintained public transportation systems through active public involvement
+Doc view of Our Project :
+[https://drive.google.com/file/d/138Ww0H00P1LkxAw7X8IQGu3lIuYZkAjw/view?usp=drivesdk]
