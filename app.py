@@ -174,17 +174,25 @@ def complaint():
         return redirect(url_for('login'))
 
     if request.method == 'POST':
-        title = request.form['title']
-        description = request.form['description']
-        location = request.form['location']
+        # Fetch all form fields safely
+        title = request.form.get('title')
+        description = request.form.get('description')
+        category = request.form.get('category')  # NEW
+        location = request.form.get('location')
+        latitude = request.form.get('latitude')  # NEW
+        longitude = request.form.get('longitude')  # NEW
         user_id = session['user_id']
 
-        cursor.execute("INSERT INTO complaints (user_id, title, description, location) VALUES (?,?,?,?)",
-                       (user_id, title, description, location))
+        # Insert into DB
+        cursor.execute("""
+            INSERT INTO complaints (user_id, title, description, category, location, latitude, longitude)
+            VALUES (?,?,?,?,?,?,?)
+        """, (user_id, title, description, category, location, latitude, longitude))
         conn.commit()
         return redirect(url_for('dashboard'))
 
     return render_template('complaint.html')
+
 
 # ✅ Logout
 @app.route('/logout')

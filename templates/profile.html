@@ -19,21 +19,13 @@
             margin: auto;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
-        h2 {
-            color: #2e7d32;
+        h2, h3 {
             text-align: center;
-            margin-bottom: 20px;
-        }
-        .profile-details {
-            margin-bottom: 20px;
+            color: #2e7d32;
         }
         .profile-details p {
             font-size: 16px;
             margin: 8px 0;
-        }
-        h3 {
-            margin-top: 20px;
-            color: #388e3c;
         }
         ul {
             list-style-type: none;
@@ -48,6 +40,22 @@
         .status {
             font-weight: bold;
             color: #388e3c;
+        }
+        .badge-section {
+            text-align: center;
+            margin-top: 25px;
+            padding: 15px;
+            background: #e8f5e9;
+            border-radius: 10px;
+        }
+        .badge-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #4caf50;
+        }
+        .points {
+            font-size: 16px;
+            color: #2e7d32;
         }
         .btn {
             display: inline-block;
@@ -76,6 +84,31 @@
             <p><strong>Locality:</strong> {{ user[4] }}</p>
             <p><strong>Address:</strong> {{ user[5] }}</p>
             <p><strong>Pincode:</strong> {{ user[6] }}</p>
+        </div>
+
+        <div class="badge-section">
+            {% set solved_count = user_complaints | selectattr('2', 'equalto', 'Solved') | list | length %}
+            {% set points = solved_count * 10 %}
+            {% if points >= 150 %}
+                {% set badge = "🌟 Platinum Badge" %}
+                {% set next = "You’ve unlocked all badges!" %}
+            {% elif points >= 100 %}
+                {% set badge = "🏆 Gold Badge" %}
+                {% set next = "Next: Platinum at 150 points" %}
+            {% elif points >= 50 %}
+                {% set badge = "🥈 Silver Badge" %}
+                {% set next = "Next: Gold at 100 points" %}
+            {% elif points >= 30 %}
+                {% set badge = "🥉 Bronze Badge" %}
+                {% set next = "Next: Silver at 50 points" %}
+            {% else %}
+                {% set badge = "🔰 Newbie" %}
+                {% set next = "Next: Bronze at 30 points" %}
+            {% endif %}
+
+            <div class="badge-name">{{ badge }}</div>
+            <div class="points">{{ points }} points ({{ solved_count }} problem(s) solved)</div>
+            <p>{{ next }}</p>
         </div>
 
         <h3>Your Complaints</h3>
